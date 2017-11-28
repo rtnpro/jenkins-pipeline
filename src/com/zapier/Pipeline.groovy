@@ -102,11 +102,10 @@ def gitEnvVars() {
 
 def containerBuildPub(Map args) {
 
-    println "Running Docker build/publish: ${args.host}/${args.acct}/${args.repo}:${args.tags.get(0)}"
+    println "Running Docker build/publish: ${args.host}/${args.repo}:${args.tags.get(0)}"
 
-    def img = docker.image("${imgName}")
     def imgTag = "${args.host}/${args.repo}:${args.tags.get(0)}"
-    sh "docker build --build-arg VCS_REF=${env.GIT_SHA} --build-arg BUILD_DATE=`date -u +'%Y-%m-%dT%H:%M:%SZ'` -t ${imageTag} ${args.dockerfile}"
+    sh "docker build --build-arg VCS_REF=${env.GIT_SHA} --build-arg BUILD_DATE=`date -u +'%Y-%m-%dT%H:%M:%SZ'` -t ${imgTag} -f ${args.dockerfile} ."
     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${args.host}"
     sh "docker push ${imgTag}"
 }
