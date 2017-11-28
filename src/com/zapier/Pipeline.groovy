@@ -105,7 +105,7 @@ def containerBuildPub(Map args) {
     println "Running Docker build/publish: ${args.host}/${args.repo}:${args.tags.get(0)}"
 
     def imgTag = "${args.host}/${args.repo}:${args.tags.get(0)}"
-    def buildCmd = "docker build --build-arg VCS_REF=${env.GIT_SHA} --build-arg BUILD_DATE=`date -u +'%Y-%m-%dT%H:%M:%SZ'`"
+    def buildCmd = "docker build"
     args.buildArgs.each({ k,v -> buildCmd += " --build-arg ${k}=${v}" })
     buildCmd += " -t ${imgTag} -f ${args.dockerfile} ."
     sh "${buildCmd}"
