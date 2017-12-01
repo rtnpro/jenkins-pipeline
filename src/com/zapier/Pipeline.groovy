@@ -109,7 +109,7 @@ def containerBuildPub(Map args) {
     args.buildArgs.each({ k,v -> buildCmd += " --build-arg ${k}=${v}" })
     buildCmd += " -t ${imgTag} -f ${args.dockerfile} ."
     sh "${buildCmd}"
-    sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${args.host}"
+    // sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${args.host}"
     sh "docker push ${imgTag}"
 }
 
